@@ -34,7 +34,8 @@ def test_TestClass():
     print(test_obj1.test_int, test_obj2.test_int)
     print(test_obj1.test_string, test_obj2.test_string)
 
+    #This is right, because test_string is initted from class level, so could be access through class
     assert MimicClass.test_string == test_obj1.test_string
 
-    print(MimicClass.test_int)
+    #print(MimicClass.test_int) #this is wrong because test_int is not initted in class level, so can't be used as class variables.
 
