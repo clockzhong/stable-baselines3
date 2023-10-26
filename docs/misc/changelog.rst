@@ -3,7 +3,7 @@
 Changelog
 ==========
 
-Release 2.2.0a7 (WIP)
+Release 2.2.0a8 (WIP)
 --------------------------
 
 Breaking Changes:
@@ -15,6 +15,7 @@ New Features:
 ^^^^^^^^^^^^^
 - Improved error message of the ``env_checker`` for env wrongly detected as GoalEnv (``compute_reward()`` is defined)
 - Improved error message when mixing Gym API with VecEnv API (see GH#1694)
+- Add support for setting ``options`` at reset with VecEnv via the ``set_options()`` method. Same as seeds logic, options are reset at the end of an episode (@ReHoss)
 
 Bug Fixes:
 ^^^^^^^^^^
@@ -54,6 +55,7 @@ Others:
 - Fixed ``stable_baselines3/her/her_replay_buffer.py`` type hints
 - Buffers do no call an additional ``.copy()`` when storing new transitions
 - Fixed ``ActorCriticPolicy.extract_features()`` signature by adding an optional ``features_extractor`` argument
+- Update dependencies (accept newer Shimmy/Sphinx version and remove ``sphinx_autodoc_typehints``)
 
 Documentation:
 ^^^^^^^^^^^^^^
@@ -1465,6 +1467,6 @@ And all the contributors:
 @Gregwar @ycheng517 @quantitative-technologies @bcollazo @git-thor @TibiGG @cool-RR @MWeltevrede
 @carlosluis @arjun-kg @tlpss @JonathanKuelz @Gabo-Tor @iwishiwasaneagle
 @Melanol @qgallouedec @francescoluciano @jlp-ue @burakdmb @timothe-chaumont @honglu2875
-@anand-bala @hughperkins @sidney-tio @AlexPasqua @dominicgkerr @Akhilez @Rocamonde @tobirohrer @ZikangXiong
+@anand-bala @hughperkins @sidney-tio @AlexPasqua @dominicgkerr @Akhilez @Rocamonde @tobirohrer @ZikangXiong @ReHoss
 @DavyMorgan @luizapozzobon @Bonifatius94 @theSquaredError @harveybellini @DavyMorgan @FieteO @jonasreiher @npit @WeberSamuel @troiganto
 @lutogniew @lbergmann1 @lukashass @BertrandDecoster @pseudo-rnd-thoughts @stefanbschneider @kyle-he @PatrickHelm @corentinlger
