@@ -29,9 +29,12 @@ def test_TestClass():
     #assert test_obj1.test_string == test_obj2.test_string
 
     assert test_obj1.test_string != test_obj2.test_string
-    
+
     print(test_obj1.test_float, test_obj2.test_float)
     print(test_obj1.test_int, test_obj2.test_int)
     print(test_obj1.test_string, test_obj2.test_string)
 
     assert MimicClass.test_string == test_obj1.test_string
+
+    print(MimicClass.test_int)
+
