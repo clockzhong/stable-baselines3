@@ -1,8 +1,6 @@
-import importlib.util
-import os
-import sys
-import time
 import pytest
+import gymnasium as gym
+from stable_baselines3 import A2C
 
 
 class MimicClass():
@@ -38,4 +36,28 @@ def test_TestClass():
     assert MimicClass.test_string == test_obj1.test_string
 
     #print(MimicClass.test_int) #this is wrong because test_int is not initted in class level, so can't be used as class variables.
+
+
+
+def test_SB3_framework():
+    env = gym.make("CartPole-v1", render_mode="rgb_array")
+
+    model = A2C("MlpPolicy", env, verbose=1)
+    #model.learn(total_timesteps=100_000) #100_000 will make the model last forever, total_reward == 500
+    model.learn(total_timesteps=50_000)
+
+    #vec_env = model.get_env()
+    env = gym.make("CartPole-v1", render_mode="human")
+    obs, info = env.reset()
+    total_reward = 0.0
+    for i in range(1000):
+        action, _state = model.predict(obs, deterministic=True)
+        obs, reward, terminated, truncated, info = env.step(action)
+        total_reward += reward
+        env.render()
+        # VecEnv resets automatically
+        if terminated or truncated:
+           print(f"done happened, reset it now, terminated:{terminated,} truncated:{truncated}, total_reward:{total_reward}!!!")
+           total_reward = 0.0
+           obs, info = env.reset()
 
