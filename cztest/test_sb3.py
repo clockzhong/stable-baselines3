@@ -1,6 +1,7 @@
 import pytest
 import gymnasium as gym
 from stable_baselines3 import A2C
+from stable_baselines3.common.vec_env import SubprocVecEnv
 
 
 class MimicClass():
@@ -60,4 +61,34 @@ def test_SB3_framework():
            print(f"done happened, reset it now, terminated:{terminated,} truncated:{truncated}, total_reward:{total_reward}!!!")
            total_reward = 0.0
            obs, info = env.reset()
+
+
+def test_vecenv_SB3_framework():
+    num_envs = 10
+    num_envs = 30
+    env_name = 'CartPole-v1'
+    env_fns = [lambda: gym.make(env_name) for i in range(num_envs)]
+    # Create vectorized env 
+    env = SubprocVecEnv(env_fns)
+
+    model = A2C("MlpPolicy", env, verbose=1)
+    #model.learn(total_timesteps=100_000) #100_000 will make the model last forever, total_reward == 500
+    #model.learn(total_timesteps=50_000)
+    model.learn(total_timesteps=50_000*10)
+
+    #vec_env = model.get_env()
+    env = gym.make("CartPole-v1", render_mode="human")
+    obs, info = env.reset()
+    total_reward = 0.0
+    for i in range(1000):
+        action, _state = model.predict(obs, deterministic=True)
+        obs, reward, terminated, truncated, info = env.step(action)
+        total_reward += reward
+        env.render()
+        # VecEnv resets automatically
+        if terminated or truncated:
+           print(f"done happened, reset it now, terminated:{terminated,} truncated:{truncated}, total_reward:{total_reward}!!!")
+           total_reward = 0.0
+           obs, info = env.reset()
+    env.close()
 
