@@ -2,7 +2,7 @@ import pytest
 import gymnasium as gym
 from stable_baselines3 import A2C
 from stable_baselines3.common.vec_env import SubprocVecEnv
-
+from datetime import datetime
 
 class MimicClass():
     test_int: int
@@ -65,7 +65,10 @@ def test_SB3_framework():
 
 def test_vecenv_SB3_framework():
     num_envs = 10
+    num_envs = 20
     num_envs = 30
+    num_envs = 140
+    #num_envs = 2
     env_name = 'CartPole-v1'
     env_fns = [lambda: gym.make(env_name) for i in range(num_envs)]
     # Create vectorized env 
@@ -74,7 +77,14 @@ def test_vecenv_SB3_framework():
     model = A2C("MlpPolicy", env, verbose=1)
     #model.learn(total_timesteps=100_000) #100_000 will make the model last forever, total_reward == 500
     #model.learn(total_timesteps=50_000)
-    model.learn(total_timesteps=50_000*10)
+    #total_timesteps=50_000*60
+    total_timesteps=50_000*5
+    total_timesteps=50_000*50
+    #total_timesteps=50_000*100
+    start_time = datetime.now()
+    model.learn(total_timesteps=total_timesteps)
+    stop_time = datetime.now()
+    print(f"{total_timesteps/(stop_time-start_time).total_seconds()} time steps per second")
 
     #vec_env = model.get_env()
     env = gym.make("CartPole-v1", render_mode="human")
